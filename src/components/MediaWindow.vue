@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <img v-if="file.mediaType == 'image'" :src="file.url">
-        <video v-if="file.mediaType == 'video'" :src="file.url" @ended="replay()" controls>
+        <video v-if="file.mediaType == 'video'" :src="file.url" controls loop autoplay>
             Your browser doesn't support HTML5 media
         </video>
     </div>
@@ -12,32 +12,6 @@ export default {
   name: 'MediaWindow',
   props: {
     file: Object
-  },
-  data() {
-    return {
-        isPlaying: false,
-    }
-  },
-  methods: {
-    replay() {
-        let video = document.querySelector('video')
-        video.currentTime = 0;
-        video.play();
-    },
-    playVideo() {
-      if (this.file.mediaType === 'video') {
-      	if (!this.isPlaying) {
-          this.isPlaing = true;
-          document.querySelector('video').play();
-        }      
-			}
-		}
-  },
-  mounted() {
-		this.playVideo();		
-  },
-  updated() {
-		this.playVideo();
   }
 }
 </script>

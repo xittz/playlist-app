@@ -46,9 +46,8 @@ export default {
   name: 'app',
   data() {
     return {
-      files: [], // file = {id, name, url, type, mediaType, showDuration},
+      files: [], // file = {id, name, url, mediaType, showDuration},
       isRunning: false,
-      currentIndex: 0,
       currentFile: null,
       timer: null,
       time: 0
@@ -76,21 +75,21 @@ export default {
       Array
         .from(Array(files.length).keys())
         .map(x => {
-          this.files.push({
-            id: '_' + Math.random().toString(36).substr(2, 9),
-            name: files[x].name,
-            url: URL.createObjectURL(files[x]),
-            type: files[x].type,
-            mediaType: files[x].type.split('/')[0],
-            showDuration: 5
-          })
+          let mediaType = files[x].type.split('/')[0]
+          if (mediaType == 'image' || mediaType == 'video')
+            this.files.push({
+              id: '_' + Math.random().toString(36).substr(2, 9), // generate random id
+              name: files[x].name,
+              url: URL.createObjectURL(files[x]),
+              mediaType: mediaType,
+              showDuration: 5
+            })
         })
     },
     // invoked by "play" button, turns on the showreel
     play() {
-      this.currentIndex = 0;
-      this.currentFile = this.files[this.currentIndex];
-      this.time = parseInt(this.files[this.currentIndex].showDuration);
+      this.currentFile = this.files[0];
+      this.time = parseInt(this.files[0].showDuration);
       this.playMedia();
     },
     // an iteration of the showreel - shows current file
@@ -117,7 +116,6 @@ export default {
     // "hard" reset, changes state to default settings
     reset() {
       this.isRunning = false;
-      this.currentIndex = 0;
       this.currentFile = null;
       clearInterval(this.timer)
       this.time = 0;

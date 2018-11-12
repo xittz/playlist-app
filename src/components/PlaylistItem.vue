@@ -15,7 +15,8 @@ export default {
     file: Object
   },
   methods: {
-    // invoked by click on the "delete" button
+    // invoked by click on the "delete" button,
+    // removes file from the playlist
     deleteFile() {
       this.$emit('deleteFile', this.file)
     }
@@ -28,6 +29,9 @@ export default {
       else
         return this.file.name.substring(0, 17) + '..'
     }
+  },
+  beforeDestroy() {
+    delete this.file;
   }
 }
 </script>

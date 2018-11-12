@@ -1,4 +1,6 @@
-# mediaplayer
+# Mediaplayer
+
+Looping playlist app
 
 ## Project setup
 ```
